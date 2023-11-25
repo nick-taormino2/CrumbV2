@@ -158,6 +158,8 @@ exports.transactionLineItems = (listing, orderData, providerCommission) => {
     throw error;
   }
 
+  const tax = .06;
+
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for order,
    * you should use one of the codes:
@@ -172,6 +174,7 @@ exports.transactionLineItems = (listing, orderData, providerCommission) => {
     code,
     unitPrice,
     quantity,
+    tax,
     includeFor: ['customer', 'provider'],
   };
 
