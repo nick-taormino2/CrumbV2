@@ -57,13 +57,13 @@ exports.calculateShippingFee = (
  *
  * @returns {Money} lineTotal
  */
-exports.calculateTotalPriceFromQuantity = (unitPrice, unitCount, tax) => {
+exports.calculateTotalPriceFromQuantity = (unitPrice, unitCount) => {
   const amountFromUnitPrice = getAmountAsDecimalJS(unitPrice);
 
   // NOTE: We round the total price to the nearest integer.
   //       Payment processors don't support fractional subunits.
   const totalPrice = amountFromUnitPrice.times(unitCount).toNearest(1, Decimal.ROUND_HALF_UP);
-  totalPrice = totalPrice + (totalPrice*tax);
+  totalPrice = totalPrice + (totalPrice * .06);
   // Get total price as Number (and validate that the conversion is safe)
   const numericTotalPrice = convertDecimalJSToNumber(totalPrice);
 
@@ -175,10 +175,10 @@ exports.calculateQuantityFromHours = (startDate, endDate) => {
  *
  */
 exports.calculateLineTotal = lineItem => {
-  const { code, unitPrice, quantity, percentage, seats, units, tax } = lineItem;
+  const { code, unitPrice, quantity, percentage, seats, units, } = lineItem;
 
   if (quantity) {
-    return this.calculateTotalPriceFromQuantity(unitPrice, quantity, tax);
+    return this.calculateTotalPriceFromQuantity(unitPrice, quantity);
   } else if (percentage != null) {
     return this.calculateTotalPriceFromPercentage(unitPrice, percentage);
   } else if (seats && units) {
