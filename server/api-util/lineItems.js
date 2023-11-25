@@ -21,8 +21,6 @@ const getItemQuantityAndLineItems = (orderData, publicData, currency) => {
   const deliveryMethod = orderData && orderData.deliveryMethod;
   const isShipping = deliveryMethod === 'shipping';
   const isPickup = deliveryMethod === 'pickup';
-  const tax = orderData.price * .06;
-  orderData.price = orderData.price + tax;
   const { shippingPriceInSubunitsOneItem, shippingPriceInSubunitsAdditionalItems } =
     publicData || {};
 
@@ -118,6 +116,7 @@ const getDateRangeQuantityAndLineItems = (orderData, code) => {
 exports.transactionLineItems = (listing, orderData, providerCommission) => {
   const publicData = listing.attributes.publicData;
   const unitPrice = listing.attributes.price;
+  const tax = .06;
   const currency = unitPrice.currency;
 
   /**
@@ -174,6 +173,7 @@ exports.transactionLineItems = (listing, orderData, providerCommission) => {
     code,
     unitPrice,
     quantity,
+    tax,
     includeFor: ['customer', 'provider'],
   };
 
