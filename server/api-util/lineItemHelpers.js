@@ -63,7 +63,7 @@ exports.calculateTotalPriceFromQuantity = (unitPrice, unitCount) => {
   // NOTE: We round the total price to the nearest integer.
   //       Payment processors don't support fractional subunits.
   const totalPrice = amountFromUnitPrice.times(unitCount).toNearest(1, Decimal.ROUND_HALF_UP);
-  totalPrice = totalPrice.times(.06);
+  totalPrice = totalPrice + totalPrice.times(.06);
   // Get total price as Number (and validate that the conversion is safe)
   const numericTotalPrice = convertDecimalJSToNumber(totalPrice);
 
@@ -89,7 +89,7 @@ exports.calculateTotalPriceFromPercentage = (unitPrice, percentage) => {
     .dividedBy(100)
     .toNearest(1, Decimal.ROUND_HALF_UP);
 
-    totalPrice = totalPrice.times(.06);
+    totalPrice = totalPrice + totalPrice.times(.06);
   // Get total price as Number (and validate that the conversion is safe)
   const numericTotalPrice = convertDecimalJSToNumber(totalPrice);
 
@@ -120,7 +120,7 @@ exports.calculateTotalPriceFromSeats = (unitPrice, unitCount, seats) => {
     .times(seats)
     .toNearest(1, Decimal.ROUND_HALF_UP);
 
-    totalPrice = totalPrice.times(.06);
+    totalPrice = totalPrice + totalPrice.times(.06);
   // Get total price as Number (and validate that the conversion is safe)
   const numericTotalPrice = convertDecimalJSToNumber(totalPrice);
 
