@@ -12,14 +12,14 @@ const LineItemTaxMaybe = props => {
     item => item.code === LINE_ITEM_TAX && !item.reversal
   );
 
-  return TaxItem ? (
+  return (
     <div className={css.lineItem}>
       <span className={css.itemLabel}>
         <FormattedMessage id="OrderBreakdown.tax" />
       </span>
       <span className={css.itemValue}>{formatMoney(intl, TaxItem.lineTotal)}</span>
     </div>
-  ) : null;
+  );
 };
 
 LineItemTaxMaybe.propTypes = {
