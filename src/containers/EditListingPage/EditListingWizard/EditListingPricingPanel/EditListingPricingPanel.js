@@ -69,7 +69,7 @@ const EditListingPricingPanel = props => {
           initialValues={initialValues}
           onSubmit={values => {
             const { price } = values;
-            const Tax = unitType === 1;
+            const tax = unitType === 50;
             // New values for listing attributes
             const updateValues = {
               price,

@@ -89,7 +89,7 @@ const getDateRangeQuantityAndLineItems = (orderData, code) => {
 
 const resolveTax = listing => {
   const { amount, currency } =
-    .6 * listing.attributes.price * listing.attributes.quantity || {};
+  listing.attributes.publicData?.Tax || {};
 
   if (amount && currency) {
     return new Money(amount, currency);
