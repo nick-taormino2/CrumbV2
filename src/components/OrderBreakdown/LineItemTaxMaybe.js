@@ -9,7 +9,7 @@ const LineItemTaxMaybe = props => {
   const { lineItems, intl } = props;
 
   const TaxItem = lineItems.find(
-    item => item.code === LINE_ITEM_TAX && !item.reversal
+    item => item.code === LINE_ITEM_TAX
   );
 
   return (
