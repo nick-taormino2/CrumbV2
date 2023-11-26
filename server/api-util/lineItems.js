@@ -220,7 +220,7 @@ exports.transactionLineItems = (listing, orderData, providerCommission) => {
 
   // Let's keep the base price (order) as first line item and provider's commission as last one.
   // Note: the order matters only if OrderBreakdown component doesn't recognize line-item.
-  const lineItems = [order, ...extraLineItems,...tax, ...providerCommissionMaybe];
+  const lineItems = [order, ...extraLineItems, ...tax, ...providerCommissionMaybe];
 
   return lineItems;
 };
