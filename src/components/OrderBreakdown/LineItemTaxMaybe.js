@@ -5,26 +5,26 @@ import { LINE_ITEM_TAX, propTypes } from '../../util/types';
 
 import css from './OrderBreakdown.module.css';
 
-const LineItemPickupFeeMaybe = props => {
+const LineItemTaxMaybe = props => {
   const { lineItems, intl } = props;
 
-  const pickupFeeLineItem = lineItems.find(
+  const TaxItem = lineItems.find(
     item => item.code === LINE_ITEM_TAX && !item.reversal
   );
 
-  return pickupFeeLineItem ? (
+  return TaxItem ? (
     <div className={css.lineItem}>
       <span className={css.itemLabel}>
-        <FormattedMessage id="OrderBreakdown.pickupFee" />
+        <FormattedMessage id="OrderBreakdown.tax" />
       </span>
-      <span className={css.itemValue}>{formatMoney(intl, pickupFeeLineItem.lineTotal)}</span>
+      <span className={css.itemValue}>{formatMoney(intl, TaxItem.lineTotal)}</span>
     </div>
   ) : null;
 };
 
-LineItemPickupFeeMaybe.propTypes = {
+LineItemTaxMaybe.propTypes = {
   lineItems: propTypes.lineItems.isRequired,
   intl: intlShape.isRequired,
 };
 
-export default LineItemPickupFeeMaybe;
+export default LineItemTaxMaybe;
