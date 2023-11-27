@@ -4,6 +4,7 @@ const {
   calculateTotalFromLineItems,
   calculateShippingFee,
   hasCommissionPercentage,
+  calculateTax,
 } = require('./lineItemHelpers');
 const { types } = require('sharetribe-flex-sdk');
 const { Money } = types;
@@ -17,6 +18,7 @@ const { Money } = types;
  */
 const getItemQuantityAndLineItems = (orderData, publicData, currency) => {
   // Check delivery method and shipping prices
+  const price = orderData ? orderData.price : null;
   const quantity = orderData ? orderData.stockReservationQuantity : null;
   const deliveryMethod = orderData && orderData.deliveryMethod;
   const isShipping = deliveryMethod === 'shipping';
@@ -58,10 +60,10 @@ const getItemQuantityAndLineItems = (orderData, publicData, currency) => {
 
     const tax = {
       code: 'line-item/tax',
-      unitPrice: new Money(500, currency),
+      unitPrice: calculateTax(price, shippingFee),
       quantity: 1,
       includeFor: ['customer', 'provider'],
-      amount: 500,
+      amount: calculateTax(price, shippingFee),
     };
 
   return { quantity, extraLineItems: [...deliveryLineItem,tax]  };

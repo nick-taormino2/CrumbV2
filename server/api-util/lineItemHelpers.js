@@ -5,6 +5,7 @@ const { Money } = types;
 
 const { getAmountAsDecimalJS, convertDecimalJSToNumber } = require('./currency');
 const { nightsBetween, daysBetween } = require('./dates');
+const { sum } = require('lodash');
 const LINE_ITEM_NIGHT = 'line-item/night';
 const LINE_ITEM_DAY = 'line-item/day';
 
@@ -48,7 +49,13 @@ exports.calculateShippingFee = (
   return null;
 };
 
+exports.calculateTax = (price, shipping) => {
+  const p = getAmountAsDecimalJS(price);
+  const s = getAmountAsDecimalJS(shipping);
+  const totalTax = (p.add(s)).times(.6);
 
+  return new Money(convertDecimalJSToNumber(totalTax), currency)
+}
 
 /**
  * Calculates lineTotal for lineItem based on quantity.
