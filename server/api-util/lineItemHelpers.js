@@ -50,8 +50,9 @@ exports.calculateShippingFee = (
 };
 
 exports.calculateTax = (price, shipping) => {
+  const tax = price.add(shipping);
 
-  return 500;
+  return tax;
 }
 
 /**
