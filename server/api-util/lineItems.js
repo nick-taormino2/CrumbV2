@@ -60,7 +60,7 @@ const getItemQuantityAndLineItems = (orderData, publicData, currency, unitPrice)
       ]
     : [];
 
-    const taxes = calculateTax(price, quantity);
+    const taxes = calculateTax(price, quantity. shippingFee);
     const tax = {
       code: 'line-item/tax',
       unitPrice: new Money(taxes, currency),
