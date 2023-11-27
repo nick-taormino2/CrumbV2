@@ -49,8 +49,8 @@ exports.calculateShippingFee = (
   return null;
 };
 
-exports.calculateTax = (price, shipping) => {
-  const tax = getAmountAsDecimalJS(shipping);
+exports.calculateTax = () => {
+  const tax = 500;
 
   return tax;
 }

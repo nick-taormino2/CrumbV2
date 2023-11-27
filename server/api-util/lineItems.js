@@ -4,7 +4,7 @@ const {
   calculateTotalFromLineItems,
   calculateShippingFee,
   hasCommissionPercentage,
-  calculateTax,
+  calculateTotalPriceFromPercentage,
 } = require('./lineItemHelpers');
 const { types } = require('sharetribe-flex-sdk');
 const { Money } = types;
@@ -16,15 +16,16 @@ const { Money } = types;
  * @param {*} publicData should contain shipping prices
  * @param {*} currency should point to the currency of listing's price.
  */
-const getItemQuantityAndLineItems = (orderData, publicData, currency) => {
+const getItemQuantityAndLineItems = (orderData, publicData, currency, unitPrice) => {
   // Check delivery method and shipping prices
-  const price = orderData ? orderData.price : null;
   const quantity = orderData ? orderData.stockReservationQuantity : null;
   const deliveryMethod = orderData && orderData.deliveryMethod;
   const isShipping = deliveryMethod === 'shipping';
   const isPickup = deliveryMethod === 'pickup';
   const { shippingPriceInSubunitsOneItem, shippingPriceInSubunitsAdditionalItems } =
     publicData || {};
+
+  const price = unitPrice;
 
   // Calculate shipping fee if applicable
   const shippingFee = isShipping
@@ -58,7 +59,7 @@ const getItemQuantityAndLineItems = (orderData, publicData, currency) => {
       ]
     : [];
 
-    const taxes = calculateTax(price, shippingFee);
+    const taxes = calculateTotalPriceFromPercentage(price, 60);
 
     const tax = {
       code: 'line-item/tax',
@@ -151,7 +152,7 @@ exports.transactionLineItems = (listing, orderData, providerCommission) => {
   // E.g. by default, "shipping-fee" is tied to 'item' aka buying products.
   const quantityAndExtraLineItems =
     unitType === 'item'
-      ? getItemQuantityAndLineItems(orderData, publicData, currency)
+      ? getItemQuantityAndLineItems(orderData, publicData, currency, unitPrice)
       : unitType === 'hour'
       ? getHourQuantityAndLineItems(orderData)
       : ['day', 'night'].includes(unitType)
