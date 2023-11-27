@@ -51,8 +51,8 @@ exports.calculateShippingFee = (
 
 exports.calculateTax = (price, shipping) => {
   const p = getAmountAsDecimalJS(price);
-  const s = getAmountAsDecimalJS(shipping);
-  const totalTax = (p.add(s)).times(.6);
+  const pns = p.add(getAmountAsDecimalJS(shipping));
+  const totalTax = pns.times(.6);
 
   return new Money(convertDecimalJSToNumber(totalTax), currency)
 }
