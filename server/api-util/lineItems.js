@@ -65,7 +65,7 @@ const getItemQuantityAndLineItems = (orderData, publicData, currency) => {
       unitPrice: new Money(taxes, currency),
       quantity: 1,
       includeFor: ['customer', 'provider'],
-      amount: 1000,
+      amount: taxes,
     };
 
   return { quantity, extraLineItems: [...deliveryLineItem,tax]  };
