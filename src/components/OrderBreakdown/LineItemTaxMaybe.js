@@ -12,8 +12,6 @@ const LineItemTaxMaybe = props => {
     item => item.code === LINE_ITEM_TAX  && !item.reversal
   );
 
-  console.log(lineItems);
-
   return TaxItem ? (
     <div className={css.lineItem}>
       <span className={css.itemLabel}>
