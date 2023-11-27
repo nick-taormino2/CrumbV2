@@ -60,10 +60,9 @@ const getItemQuantityAndLineItems = (orderData, publicData, currency, unitPrice)
     : [];
 
     const taxes = calculateTotalPriceFromPercentage(price, 60);
-
     const tax = {
       code: 'line-item/tax',
-      unitPrice: new Money(taxes, currency),
+      unitPrice: taxes,
       quantity: 1,
       includeFor: ['customer', 'provider'],
       amount: taxes,
