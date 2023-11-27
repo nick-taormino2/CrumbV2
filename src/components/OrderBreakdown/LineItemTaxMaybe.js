@@ -17,7 +17,7 @@ const LineItemTaxMaybe = props => {
   return TaxItem ? (
     <div className={css.lineItem}>
       <span className={css.itemLabel}>
-        <FormattedMessage id="OrderBreakdown.tax" />
+        Tax
       </span>
       <span className={css.itemValue}>{formatMoney(intl, TaxItem.lineTotal)}</span>
     </div>
