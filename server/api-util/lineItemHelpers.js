@@ -50,7 +50,7 @@ exports.calculateShippingFee = (
 };
 
 exports.calculateTax = (price, shipping) => {
-  const tax = getAmountAsDecimalJS(price);
+  const tax = getAmountAsDecimalJS(shipping);
 
   return tax;
 }
