@@ -53,7 +53,7 @@ exports.calculateTax = (price, quantity, isShipping, currency, ship1, ship2) => 
   const ship = 0;
   if(isShipping)
   {
-    ship = getAmountAsDecimalJS(ship1, currency);
+    
   }
   const tax = getAmountAsDecimalJS(price)
   .add(ship)
