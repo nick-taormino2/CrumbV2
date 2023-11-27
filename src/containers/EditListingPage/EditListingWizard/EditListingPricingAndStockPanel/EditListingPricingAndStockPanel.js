@@ -21,13 +21,14 @@ const getInitialValues = params => {
   const isPublished = listing?.id && listing?.attributes?.state !== LISTING_STATE_DRAFT;
   const price = listing?.attributes?.price;
   const currentStock = listing?.currentStock;
+  const tax = 500;
 
   // The listing resource has a relationship: `currentStock`,
   // which you should include when making API calls.
   const currentStockQuantity = currentStock?.attributes?.quantity;
   const stock = currentStockQuantity != null ? currentStockQuantity : isPublished ? 0 : 1;
 
-  return { price, stock };
+  return { price, stock, tax };
 };
 
 const EditListingPricingAndStockPanel = props => {
@@ -82,8 +83,7 @@ const EditListingPricingAndStockPanel = props => {
           className={css.form}
           initialValues={initialValues}
           onSubmit={values => {
-            const { price, stock } = values;
-
+            const { price, stock, tax } = values;
             // Update stock only if the value has changed.
             // NOTE: this is going to be used on a separate call to API
             // in EditListingPage.duck.js: sdk.stock.compareAndSet();
@@ -106,6 +106,7 @@ const EditListingPricingAndStockPanel = props => {
             const updateValues = {
               price,
               ...stockUpdateMaybe,
+              tax,
             };
             onSubmit(updateValues);
           }}

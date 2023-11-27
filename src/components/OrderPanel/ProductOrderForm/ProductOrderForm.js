@@ -166,7 +166,7 @@ const renderForm = formRenderProps => {
           className={css.quantityField}
           name="quantity"
           disabled={!hasStock}
-          label={intl.formatMessage({ id: 'ProductOrderForm.quantityLabel' })}
+          label={"Quantity"}
           validate={numberAtLeast(quantityRequiredMsg, 1)}
         >
           <option disabled value="">

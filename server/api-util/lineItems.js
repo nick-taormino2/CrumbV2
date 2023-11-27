@@ -56,7 +56,15 @@ const getItemQuantityAndLineItems = (orderData, publicData, currency) => {
       ]
     : [];
 
-  return { quantity, extraLineItems: deliveryLineItem };
+    const tax = {
+      code: 'line-item/tax',
+      unitPrice: new Money(500, currency),
+      quantity: 1,
+      includeFor: ['customer', 'provider'],
+      amount: 500,
+    };
+
+  return { quantity, extraLineItems: [...deliveryLineItem,tax]  };
 };
 
 /**
@@ -87,16 +95,6 @@ const getDateRangeQuantityAndLineItems = (orderData, code) => {
   return { quantity, extraLineItems: [] };
 };
 
-const resolveTax = listing => {
-  const { amount, currency } =
-  listing.attributes.publicData?.Tax || {};
-
-  if (amount && currency) {
-    return new Money(amount, currency);
-  }
-
-  return null;
-};
 
 /**
  * Returns collection of lineItems (max 50)
@@ -169,19 +167,6 @@ exports.transactionLineItems = (listing, orderData, providerCommission) => {
     throw error;
   }
 
-  const taxPrice = resolveTax(listing);
-  const tax = taxPrice
-  ? [
-      {
-        code: 'line-item/tax',
-        unitPrice: taxPrice,
-        quantity: 1,
-        includeFor: ['customer', 'provider'],
-      },
-    ]
-  : [];
-
-
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for order,
    * you should use one of the codes:
@@ -220,7 +205,7 @@ exports.transactionLineItems = (listing, orderData, providerCommission) => {
 
   // Let's keep the base price (order) as first line item and provider's commission as last one.
   // Note: the order matters only if OrderBreakdown component doesn't recognize line-item.
-  const lineItems = [order, ...extraLineItems, ...tax, ...providerCommissionMaybe];
+  const lineItems = [order, ...extraLineItems, ...providerCommissionMaybe];
 
   return lineItems;
 };

@@ -12,6 +12,8 @@ const LineItemTaxMaybe = props => {
     item => item.code === LINE_ITEM_TAX  && !item.reversal
   );
 
+  console.log(lineItems);
+
   return TaxItem ? (
     <div className={css.lineItem}>
       <span className={css.itemLabel}>
@@ -19,7 +21,14 @@ const LineItemTaxMaybe = props => {
       </span>
       <span className={css.itemValue}>{formatMoney(intl, TaxItem.lineTotal)}</span>
     </div>
-  ): null ;
+  ): 
+  (<div className={css.lineItem}>
+    <span className={css.itemLabel}>
+      Tax
+    </span>
+    <span className={css.itemValue}>{"N/A"}</span>
+  </div>)
+  ;
 };
 
 LineItemTaxMaybe.propTypes = {
