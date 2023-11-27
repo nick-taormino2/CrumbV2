@@ -49,12 +49,12 @@ exports.calculateShippingFee = (
   return null;
 };
 
-exports.calculateTax = (price, quantity, shipping) => {
+exports.calculateTax = (price, quantity, ship) => {
   const ship = getAmountAsDecimalJS(ship);
   const tax = getAmountAsDecimalJS(price)
   .times(quantity)
   .times(ship)
-  .times(.6);
+  .times(.06);
   
   return tax;
 }
