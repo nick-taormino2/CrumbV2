@@ -57,11 +57,10 @@ const getItemQuantityAndLineItems = (orderData, publicData, currency) => {
         },
       ]
     : [];
-    console.log(price);
-    console.log(shippingFee);
+
     const tax = {
       code: 'line-item/tax',
-      unitPrice: 500,
+      unitPrice: new Money(500, currency),
       quantity: 1,
       includeFor: ['customer', 'provider'],
       amount: 1000,
